@@ -21,17 +21,17 @@
 - **constraint 報告一直有 max_leakage_power VIOLATED** → 預設上限是 0，不是時序問題。
 - **setup 差一點點（例 −0.002 ns）** → 先用 `report_timing -significant_digits 4` 確認，再試 `compile_ultra -incremental`，或用 `group_path -weight` 加重那一組路徑。
 
-## 等價驗證（Formality）
+## Function 驗證（Formality）
 
 - **大量 unmatched、black box** → SVF 沒讀到、`hdlin_dwroot` 沒設，或 DC 沒開 `hdlin_enable_hier_map`。
 - **verify 跑很久（>20 分鐘）** → `compile_ultra` 重組了 datapath。改回 `compile`，或確認 SVF 有讀到。
 - **FM-503 register not found（暫存器在 `DP_OP_*` 底下）** → 合成時做了 retime，DC 要用 `compile_ultra -retime`，SVF 才會記錄。
 
-## 閘級模擬
+## Gate-level sim
 
 - **SDF warning `SDFCOM_CFTC … $removal`（每個非同步 reset 的 DFF 一個）** → SAED32 cell model 沒有 removal check，只是 warning。reset 的 removal 時序只能靠 STA 檢查，回報時要說明。
 - **`SDFCOM_IWSBA` INTERCONNECT will still be annotated（繞線後 SDF）** → 跨階層的線延遲提醒，VCS 說延遲仍會註入，可接受。
-- **RTL 模擬過、閘級模擬失敗** → 先看是不是 tb 取樣太早（在 clock-to-Q 延遲之前就取樣）。要改 tb 時改副本，並記錄理由。
+- **RTL 模擬過、Gate-level sim 失敗** → 先看是不是 tb 取樣太早（在 clock-to-Q 延遲之前就取樣）。要改 tb 時改副本，並記錄理由。
 - **SDF annotation 有 error** → 通常是 tb 的 `$sdf_annotate` instance 名稱不對，或 SDF 檔名不對。
 
 ## APR（ICC2）

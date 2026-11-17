@@ -5,7 +5,7 @@
 #   pt_shell -x "set corner slow"    -f ../../scripts/pt_sta.tcl | tee sta_slow.log
 #   pt_shell -x "set corner typical" -f ../../scripts/pt_sta.tcl | tee sta_typical.log
 #   pt_shell -x "set corner fast"    -f ../../scripts/pt_sta.tcl | tee sta_fast.log
-# 也會寫出該 corner 的 SDF，給閘級模擬用
+# 也會寫出該 corner 的 SDF，給 Gate-level sim 用
 #
 # 【要改的地方】
 #   通常不用改。要加 corner 就改 common_setup.tcl 的 CORNERS

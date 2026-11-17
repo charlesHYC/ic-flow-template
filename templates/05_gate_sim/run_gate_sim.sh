@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ##############################################################################
-# run_gate_sim.sh — 閘級模擬（VCS + SDF）：用合成 netlist 加上 cell 延遲再模擬一次
+# run_gate_sim.sh — Gate-level sim（VCS + SDF）：用合成 netlist 加上 cell 延遲再模擬一次
 # 執行（每個 corner 一個目錄）：mkdir -p work/gate_slow && cd work/gate_slow && bash ../../scripts/run_gate_sim.sh slow
 #   參數是 corner：slow 用 max 延遲（看 setup）、fast 用 min 延遲（看 hold），兩個都要跑
 #   fast 同理（work/gate_fast）；繞線後在 work/gate_post_slow 等目錄跑：POSTROUTE=1 bash ../../scripts/run_gate_sim.sh slow

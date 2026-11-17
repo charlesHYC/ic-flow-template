@@ -1,5 +1,5 @@
 ##############################################################################
-# fm_rtl2gate.tcl — 等價驗證（Formality）：確認合成 netlist 的功能和 RTL 一樣
+# fm_rtl2gate.tcl — Function 驗證（Formality）：確認合成 netlist 的功能和 RTL 一樣
 # 執行：mkdir -p work/fm && cd work/fm && fm_shell -f ../../scripts/fm_rtl2gate.tcl | tee fm.log
 #   reference（r:）= RTL，implementation（i:）= netlist，SVF 告訴 Formality DC 改了哪些名字
 #

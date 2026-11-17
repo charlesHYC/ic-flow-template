@@ -1,5 +1,5 @@
 ##############################################################################
-# fm_postroute.tcl — 繞線後等價驗證（Formality）：RTL vs 繞線後 netlist
+# fm_postroute.tcl — 繞線後 Function 驗證（Formality）：RTL vs 繞線後 netlist
 # 執行：mkdir -p work/fm_post && cd work/fm_post && fm_shell -f ../../scripts/fm_postroute.tcl | tee fm.log
 #   APR 會插 buffer、tie cell、建 clock tree；要確認功能沒有被改壞。沿用 DC 的 SVF 對名字
 #

@@ -22,7 +22,7 @@ SAED32 的 PAD 資料在 `lib/io_std/`：
 | 資料 | 內容 | 哪一步用 |
 |---|---|---|
 | `db_nldm/*.db`、`.lib` | 每顆 PAD 的延遲、負載能力、電壓，一個 corner 一份 | 合成、STA；也可以從這裡查 PAD 延遲 |
-| `verilog/` | PAD 的行為 model（沒有延遲） | RTL／閘級模擬 |
+| `verilog/` | PAD 的行為 model（沒有延遲） | RTL／Gate-level sim |
 | `lef/` | 外框大小、pin 位置、繞線阻擋 | 建 NDM、APR |
 | `gds/` | 真正的版圖 | APR 輸出 GDS 時併進去，給 DRC／LVS |
 | `lvs/*.cdl` | PAD 裡的電晶體電路 | LVS |
@@ -63,7 +63,7 @@ PAD 要在寫 RTL、跑第一次模擬前就決定，不是到 APR 才加：PAD 
 | 1. RTL 模擬 | 模擬 `<DESIGN>_chip`。官方 PAD model 沒有延遲，要自己加 `specify` 延遲才看得到 PAD 的影響 |
 | 2. 合成 | PAD 設 `set_dont_touch`；輸出負載改 1 pF；port 到 PAD 那段是打線，`set_resistance 0` |
 | 4. STA | 路徑起訖點是 PAD；clock 經過 PAD 後要 `set_ideal_network`（否則寫出的 SDF 會帶很大的假延遲） |
-| 5. 閘級模擬 | SDF 的 PAD 延遲要註入得進 PAD model |
+| 5. Gate-level sim | SDF 的 PAD 延遲要註入得進 PAD model |
 | 6. APR | 依 PAD 數算 die；擺 PAD、corner、filler；建立四組電源 VDD／VSS／VDDIO／VSSIO；電源 PAD 接到 core ring；port 綁在 PAD 上；clock PAD 後插一顆 buffer 當 clock tree 起點 |
 | 7. DRC／LVS | GDS 併入 PAD 版圖；LVS 加入 PAD 的 CDL |
 | 8、9 | 和核心相同，top 換成 `<DESIGN>_chip` |

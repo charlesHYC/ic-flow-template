@@ -4,7 +4,7 @@
 #   mkdir -p work/postroute && cd work/postroute
 #   pt_shell -x "set corner slow" -f ../../scripts/pt_postroute.tcl | tee sta_slow.log   （typical、fast 同理）
 # 和佈局前 STA 的差別：clock 用實際的 clock tree（propagated）、線延遲用實際 RC、不用 wire-load
-# 也會寫出 SDF，給繞線後閘級模擬（POSTROUTE=1 run_gate_sim.sh）
+# 也會寫出 SDF，給繞線後 Gate-level sim（POSTROUTE=1 run_gate_sim.sh）
 #
 # 【要改的地方】
 #   通常不用改

@@ -1,6 +1,6 @@
 ---
 name: ic-flow-template
-description: 數位 IC（cell-based）設計流程的公版腳本：RTL 模擬、DC 合成、Formality、PrimeTime STA、閘級模擬、ICC2 APR、ICV DRC/LVS、StarRC、繞線後 STA，每個階段一份 .tcl／.sh，檔頭寫清楚要改哪裡、為什麼、跑完看哪份報告。給學習者複製後自己修改、自己執行、自己判斷結果；不做一鍵自動化。當使用者問數位 IC flow 某個階段怎麼做、要一份 dc_shell／pt_shell／fm_shell／icc2_shell／ICV／StarRC 腳本、問下一步是什麼，或問某個階段的錯誤怎麼修時使用。
+description: 數位 IC（cell-based）設計流程的公版腳本：RTL 模擬、DC 合成、Formality、PrimeTime STA、Gate-level sim、ICC2 APR、ICV DRC/LVS、StarRC、繞線後 STA，每個階段一份 .tcl／.sh，檔頭寫清楚要改哪裡、為什麼、跑完看哪份報告。給學習者複製後自己修改、自己執行、自己判斷結果；不做一鍵自動化。當使用者問數位 IC flow 某個階段怎麼做、要一份 dc_shell／pt_shell／fm_shell／icc2_shell／ICV／StarRC 腳本、問下一步是什麼，或問某個階段的錯誤怎麼修時使用。
 ---
 
 # 數位 IC 設計流程公版
@@ -15,9 +15,9 @@ description: 數位 IC（cell-based）設計流程的公版腳本：RTL 模擬�
 |---|---|---|---|---|---|---|
 | 1 | RTL 模擬 | RTL 功能對不對 | VCS（Verdi 看波形） | `01_rtl_sim/run_rtl_sim.sh` | RTL、tb → log、波形 | tb 印出 PASS，mismatch = 0 |
 | 2 | 邏輯合成 | RTL 轉成 gate-level netlist，並滿足時序 | Design Compiler | `02_syn/dc_syn.tcl`、`constraints.sdc` | RTL、SDC、.db → netlist、SDF、SVF | setup slack ≥ 0，constraint 報告沒有 VIOLATED |
-| 3 | 等價驗證 | netlist 的功能和 RTL 是否一樣 | Formality | `03_fm/fm_rtl2gate.tcl` | RTL、netlist、SVF → 比對報告 | `Verification SUCCEEDED` |
+| 3 | Function 驗證 | netlist 的功能和 RTL 是否一樣 | Formality | `03_fm/fm_rtl2gate.tcl` | RTL、netlist、SVF → 比對報告 | `Verification SUCCEEDED` |
 | 4 | 佈局前 STA | 每個 corner 的 setup／hold | PrimeTime | `04_sta/pt_sta.tcl` | netlist、SDC → 時序報告、SDF | 三個 corner slack ≥ 0，沒有 VIOLATED |
-| 5 | 閘級模擬 | 加上 cell 延遲後功能還對不對 | VCS + SDF | `05_gate_sim/run_gate_sim.sh` | netlist、SDF、tb → log | 功能 PASS、SDF 0 error、沒有 timing violation |
+| 5 | Gate-level sim | 加上 cell 延遲後功能還對不對 | VCS + SDF | `05_gate_sim/run_gate_sim.sh` | netlist、SDF、tb → log | 功能 PASS、SDF 0 error、沒有 timing violation |
 | 6-0 | 建 NDM | 把 cell 資料轉成 ICC2 的格式 | ICC2 lm_shell | `06_apr/build_ndm.tcl` | .db、LEF → NDM | 沒有 Error（同一製程只要建一次） |
 | 6 | APR | 擺放、電源、clock tree、繞線 | IC Compiler II | `06_apr/apr.tcl` | netlist、NDM、SDC → routed block | 0 繞線 DRC／open、電源沒浮接、沒有 VIOLATED |
 | 6-E | APR ECO（需要時） | 修 route_opt 沒修掉的 max_cap／transition 與繞線 DRC | IC Compiler II | `06_apr/apr_eco.tcl` | routed block → 修正後的 routed block | 0 繞線 DRC、沒有 VIOLATED |
@@ -27,8 +27,8 @@ description: 數位 IC（cell-based）設計流程的公版腳本：RTL 模擬�
 | 7b | LVS | layout 和 netlist 是同一個電路 | IC Validator | `07_drc_lvs/run_lvs.sh` | GDS、netlist → 比對結果 | `Final comparison result:PASS` |
 | 8 | 寄生萃取 | 算出繞線實際的 R、C | StarRC | `08_pex/run_starrc.sh` | routed block → SPEF ×3 corner | SPEF 有產生，log 沒有 Error |
 | 9a | 繞線後 STA | 用實際 RC 再檢查時序 | PrimeTime | `09_postroute/pt_postroute.tcl` | routed netlist、SPEF → 報告、SDF | 三個 corner slack ≥ 0，沒有 VIOLATED；小幅 max_cap 超標時用 `apr_eco.tcl`（`FROM_PT 1`）修，再從 6-1 重跑 |
-| 9b | 繞線後等價驗證 | APR 有沒有改壞功能 | Formality | `09_postroute/fm_postroute.tcl` | RTL、routed netlist → 比對報告 | `Verification SUCCEEDED` |
-| 9c | 繞線後閘級模擬 | 實際延遲下功能還對不對 | VCS + SDF | `05_gate_sim/run_gate_sim.sh`（`POSTROUTE=1`） | routed netlist、繞線後 SDF → log | 同第 5 步 |
+| 9b | 繞線後 Function 驗證 | APR 有沒有改壞功能 | Formality | `09_postroute/fm_postroute.tcl` | RTL、routed netlist → 比對報告 | `Verification SUCCEEDED` |
+| 9c | 繞線後 Gate-level sim | 實際延遲下功能還對不對 | VCS + SDF | `05_gate_sim/run_gate_sim.sh`（`POSTROUTE=1`） | routed netlist、繞線後 SDF → log | 同第 5 步 |
 
 比賽（例如 IC Contest）通常只做到第 5 步；6～9 是延伸成完整晶片流程。回答前先確認使用者要做到哪一步。
 

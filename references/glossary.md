@@ -10,7 +10,7 @@
 | **APR** | Automatic Placement and Routing | 自動擺放與繞線，把 netlist 變成實際版圖 |
 | **PEX** | Parasitic Extraction | 萃取線上的寄生電阻與電容（StarRC 做的事） |
 | **STA** | Static Timing Analysis | 靜態時序分析：不跑模擬，直接算每條路徑夠不夠快 |
-| **LEC** | Logic Equivalence Checking | 邏輯等價驗證：數學證明兩份電路功能相同（Formality 做的事） |
+| **LEC** | Logic Equivalence Checking | Function 驗證：數學證明兩份電路功能相同（Formality 做的事） |
 | **DRC** | Design Rule Check | 檢查版圖有沒有違反製程規則（線太細、太近） |
 | **LVS** | Layout Versus Schematic | 比對版圖和電路圖是否一致 |
 | **ECO** | Engineering Change Order | 設計後期的小幅修改（插 buffer、換大顆 cell），不重做整個流程 |
@@ -21,9 +21,9 @@
 
 | 縮寫 | 全名 | 用在哪一階段 |
 |---|---|---|
-| **VCS** | Verilog Compiled Simulator（Synopsys） | RTL 模擬、閘級模擬 |
+| **VCS** | Verilog Compiled Simulator（Synopsys） | RTL 模擬、Gate-level sim |
 | **DC** | Design Compiler（Synopsys） | 邏輯合成 |
-| **FM** | Formality（Synopsys） | 等價驗證 |
+| **FM** | Formality（Synopsys） | Function 驗證 |
 | **PT** | PrimeTime（Synopsys） | STA |
 | **ICC2** | IC Compiler II（Synopsys） | APR |
 | **ICV** | IC Validator（Synopsys） | DRC、LVS |
@@ -41,7 +41,7 @@
 | **SPICE** | Simulation Program with Integrated Circuit Emphasis | 電路模擬程式；CDL 是它的格式變體 |
 | **Liberty**（.lib／.db） | Synopsys 制定的 cell 時序格式（.db 是編譯後的二進位版） | 每顆 cell 的延遲、電容、面積規格表 |
 | **SDC** | Synopsys Design Constraints | 時序約束：clock 週期、I/O 延遲、負載 |
-| **SDF** | Standard Delay Format | 每顆 cell、每條線的延遲，給閘級模擬用 |
+| **SDF** | Standard Delay Format | 每顆 cell、每條線的延遲，給 Gate-level sim 用 |
 | **SPEF** | Standard Parasitic Exchange Format | 萃取出的寄生 RC，給繞線後 STA 用 |
 | **SVF** | Setup Verification for Formality | DC 記錄的合成轉換紀錄，讓 Formality 對得上名字 |
 | **DDC** | Synopsys 的設計資料庫格式 | DC 存檔用，保留約束與合成結果 |
