@@ -91,7 +91,7 @@ flowchart TB
 ## 安裝與使用
 
 ```bash
-git clone https://github.com/charlesHYC/-ic-flow-template.git
+git clone https://github.com/charlesHYC/ic-flow-template.git
 ```
 
 1. 把 `templates/` 底下的檔案複製到自己專案的 `scripts/`。
@@ -101,7 +101,7 @@ git clone https://github.com/charlesHYC/-ic-flow-template.git
 當成 skill 使用時，把整個 repo 放到 AI 助手讀取 skill 的目錄，例如：
 
 ```bash
-git clone https://github.com/charlesHYC/-ic-flow-template.git ~/.claude/skills/ic-flow-template
+git clone https://github.com/charlesHYC/ic-flow-template.git ~/.claude/skills/ic-flow-template
 ```
 
 ## 檔案結構
