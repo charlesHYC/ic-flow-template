@@ -20,7 +20,7 @@
 | 8 | 寄生萃取 | StarRC | `templates/08_pex/run_starrc.sh` |
 | 9 | 繞線後 STA／等價驗證／模擬 | PrimeTime、Formality、VCS | `templates/09_postroute/pt_postroute.tcl`、`fm_postroute.tcl`；模擬用 `run_gate_sim.sh`（`POSTROUTE=1`） |
 
-每個階段做什麼、怎樣算通過，見 `SKILL.md`；遇到錯誤先查 `references/pitfalls.md`；縮寫對照在 `references/glossary.md`。
+每個階段做什麼、怎樣算通過，見 `SKILL.md`；遇到錯誤先查 `references/pitfalls.md`；縮寫對照在 `references/glossary.md`；想加 IO PAD 做成完整晶片，見 `references/pad.md`。
 
 ## 使用方式
 
@@ -34,7 +34,7 @@
 
 - Synopsys 工具：VCS、Design Compiler、Formality、PrimeTime、IC Compiler II、IC Validator、StarRC。
 - 製程預設 SAED32 EDK（RVT，三個 corner）。PDK 路徑寫在 `common_setup.tcl` 與幾支 `.sh` 的檔頭，請改成自己環境的位置。
-- 只做核心，不含 IO PAD。
+- 只做核心，不含 IO PAD 的腳本；PAD 的觀念與做法見 `references/pad.md`。
 - 已用一個 IC Contest 題目在 SAED32 上從頭跑過，每個階段都通過（DRC CLEAN、LVS PASS、繞線後三個 corner 沒有違規）。CBDK_IC_Contest 製程的改法寫在 `SKILL.md`，但沒有實際跑過。
 
 ## 授權

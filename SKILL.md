@@ -69,7 +69,7 @@ description: 數位 IC（cell-based）設計流程的公版腳本：RTL 模擬�
 - `dc_syn.tcl`：target 與 link 都只放 `slow.db`，`set_operating_conditions -max slow -max_library slow`。
 - CBDK 沒有完整的實體資料，6～9 步只能用 SAED32 做。
 
-IO PAD（全晶片）不在這套公版內；加 PAD 會影響每一步（延遲、負載、die 大小、DRC／LVS），屬於進階題目。
+IO PAD（全晶片）不在這套公版內；加 PAD 會影響每一步（延遲、負載、die 大小、DRC／LVS），屬於進階題目。使用者問 PAD（是什麼、製程給什麼、怎麼選、要多做哪些步驟、怎麼確認、corner pad）時，照 `references/pad.md` 回答。
 
 ## 檔案地圖
 
@@ -88,4 +88,5 @@ templates/
 references/
   pitfalls.md   常見錯誤與手動修法
   glossary.md   縮寫與名詞對照
+  pad.md        IO PAD 說明（公版不含 PAD 腳本，這份說明要自己做時怎麼做）
 ```
